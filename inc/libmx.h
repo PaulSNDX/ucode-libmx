@@ -6,9 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-//#include <malloc.h> // for Linux -> malloc_usable_size
-#include <malloc/malloc.h> // for IOS -> malloc_size
+#include <malloc/malloc.h>
 
 // Utils pack
 char *mx_itoa(int number);
@@ -90,10 +88,13 @@ bool mx_isdigit(int c);
 bool mx_isspace(char c);
 bool mx_islower_hex(int c);
 bool mx_isupper_hex(int c);
+void mx_printerr(const char *s);
 void *mx_calloc(size_t count, size_t size);
 
 char *mx_strchr(const char *s, int c);
 
 void mx_swap_str(char **str1, char **str2);
 
+int mx_atoi(const char *str);
+int mx_file_content_len(int fd);
 int mx_strncmp(const char *s1, const char *s2, int n);
