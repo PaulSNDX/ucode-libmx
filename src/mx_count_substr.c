@@ -2,6 +2,7 @@
 
 int mx_count_substr(const char *str, const char *sub) {
     if (str == NULL || sub == NULL) return -1;
+    if (!mx_strlen(sub)) return 0;
 
     int count = 0;
     int index = 0;

@@ -7,8 +7,10 @@ int mx_memcmp(const void *s1, const void *s2, size_t n) {
     const unsigned char *copy2 = s2;
     size_t i = 0;
 
-    for (; i < n && copy1[i] == copy2[i]; i++)
-        if (copy1[i] == '\0' && copy2[i]== '\0') return 0;
-
+    while (i <= n) {
+        if (!copy1[i] || !copy2[i]) return 0;
+        if (copy1[i] != copy2[i]) break;
+        i++;
+    }
     return copy1[i] - copy2[i];
 }

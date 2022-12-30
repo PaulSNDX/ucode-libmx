@@ -5,16 +5,11 @@ int mx_get_substr_index(const char *str, const char *sub) {
 
     int index = 0;
     int sub_len = mx_strlen(sub);
-    char temp[sub_len];
+    int str_len = mx_strlen(str);
 
-    while (str[index] != '\0') {
-        mx_strncpy(temp, str, sub_len);
-        
-        if (mx_strcmp(temp, sub) == 0) return index;
-        
+    while (index + sub_len <= str_len) {
+        if (!mx_strncmp(&str[index], sub, sub_len)) return index;
         index++;
-        str++;
     }
-
     return -1;
 }

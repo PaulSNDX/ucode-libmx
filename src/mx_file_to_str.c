@@ -1,20 +1,10 @@
 #include "../inc/libmx.h"
 
-static int file_content_lenght(int fd) {
-    char buf;
-    int lenght = 0;
-
-    while (read(fd, &buf, 1) != 0) lenght ++;
-
-    close(fd);
-    return lenght;
-}
-
 char *mx_file_to_str(const char *filename) {
     int fd = open(filename, O_RDONLY);
 
     if (fd > 0) {
-        int lenght = file_content_lenght(fd);
+        int lenght = mx_file_content_len(fd);
 
         if (!lenght) return NULL;
         

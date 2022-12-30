@@ -1,19 +1,28 @@
-.PHONY: libmx uninstall reinstall
+NAME = libmx.a
 
-PROJECT_NAME = libmx.a
-SRC = $(wildcard src/*.c)
-INC = $(wildcard inc/*.c)
+SRC_FILES = $(wildcard src/*.c)
+OBJ_FILES = $(addprefix obj/, $(notdir $(SRC_FILES:%.c=%.o)))
 
-libmx:
-	@clang -c ${INC} ${SRC}
-	@mkdir obj
-	@mv *.o obj
-	@ar -rc $(PROJECT_NAME) obj/*.o
-	@ranlib $(PROJECT_NAME)
-	@rm -r obj/
+all: $(NAME) clean
+
+$(NAME): $(OBJ_FILES)
+	@ar rcs $@ $^
+
+$(OBJ_FILES): | obj
+
+obj/%.o: src/%.c $(inc/libmx.h)
+	@clang -std=c11 -Wall -Wextra -Werror -Wpedantic -c $< -o $@ -I inc
+
+obj:
+	@mkdir -p $@
+
+clean:
+	@rm -rf obj
 
 uninstall:
-	@rm -r obj/
-	@rm $(PROJECT_NAME)
+	@rm -rf obj
+	@rm -rf $(NAME)
 
-reinstall: uninstall libmx
+reinstall: uninstall all
+
+.PHONY: all uninstall clean reinstall
